@@ -23,6 +23,17 @@ router.get('/', async (req, res) => {
   }
 });
 
+// Get single bus by ID
+router.get('/:id', async (req, res) => {
+  try {
+    const bus = await Bus.findById(req.params.id);
+    if (!bus) return res.status(404).json({ message: 'Bus not found!' });
+    res.json(bus);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
 // Add new bus (admin)
 router.post('/add', async (req, res) => {
   const bus = new Bus(req.body);
